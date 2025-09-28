@@ -56,9 +56,28 @@ namespace DiscordBot
                 Console.WriteLine("Bot is ready.");
             };
 
-            await _client.LoginAsync(TokenType.Bot, configuration.GetValue<string>("token"));
+            await _client.LoginAsync(TokenType.Bot, configuration.GetSection("Startup").GetValue<string>("Token"));
             await _client.StartAsync();
+
+            _client.Ready += () => ReadyAsync(host);
+
             await Task.Delay(-1);
+        }
+
+        public async Task ReadyAsync(IHost host) 
+        {
+            using IServiceScope serviceScope = host.Services.CreateScope();
+            IServiceProvider provider = serviceScope.ServiceProvider;
+            var configuration = provider.GetRequiredService<IConfigurationRoot>();
+            var _interactionService = provider.GetRequiredService<InteractionService>();
+
+            //register commands globally
+            //throttled
+            //default false, run once on first start or deployment of new version
+            if (configuration.GetSection("Startup").GetValue<bool>("RegisterCommands"))
+            {
+                await _interactionService.RegisterCommandsGloballyAsync();
+            }
         }
     }
 }
