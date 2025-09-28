@@ -76,7 +76,16 @@ namespace DiscordBot
             //default false, run once on first start or deployment of new version
             if (configuration.GetSection("Startup").GetValue<bool>("RegisterCommands"))
             {
-                await _interactionService.RegisterCommandsGloballyAsync();
+                try
+                {
+                    await _interactionService.RegisterCommandsGloballyAsync();
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message);
+                }
+                
             }
         }
     }

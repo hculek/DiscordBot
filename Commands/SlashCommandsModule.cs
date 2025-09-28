@@ -13,11 +13,10 @@ namespace DiscordBot.Commands
         }
 
         [SlashCommand("start", "Start scheduled test messages.")]
-        
-        public async Task StartCommand([Summary("Delay start in seconds")] int startDelay = 0,
-            [Summary("Delay in seconds")] int delay = 5)
+        public async Task StartCommand([Summary("Delay before starting (in seconds)")] int start_delay = 0,
+            [Summary("Delay between messages (in seconds)")] int interval_delay = 5)
         {
-            _messenger.StartMessaging(Context.Channel, startDelay, delay);
+            _messenger.StartMessaging(Context.Channel, start_delay, interval_delay);
             await RespondAsync("Starting scheduled messages");
         }
 
