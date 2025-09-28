@@ -1,0 +1,6 @@
+{
+  "Startup": {
+    "Token": "",
+    "RegisterCommands": false //default false, set true to run once on first start or deployment of new version
+  }
+}
