@@ -6,6 +6,7 @@ using Discord.WebSocket;
 using DiscordBot.Commands;
 using Discord.Interactions;
 using Discord.Commands;
+using DiscordBot.CommandHelpers;
 
 namespace DiscordBot
 {
@@ -31,6 +32,7 @@ namespace DiscordBot
                     .AddSingleton(s => new InteractionService(s.GetRequiredService<DiscordSocketClient>()))
                     .AddSingleton<SlashCommandsHandler>()
                     .AddSingleton(s => new CommandService())
+                    .AddSingleton<ScheduleMessenger>()
                 ).Build();
 
             await RunAsync(host);

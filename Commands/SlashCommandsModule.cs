@@ -1,10 +1,16 @@
 ﻿using Discord.Interactions;
+using DiscordBot.CommandHelpers;
 
 namespace DiscordBot.Commands
 {
     public class SlashCommandsModule : InteractionModuleBase<SocketInteractionContext>
     {
-        private static readonly ScheduleMessenger _messenger = new ScheduleMessenger();
+        private readonly ScheduleMessenger _messenger;
+
+        public SlashCommandsModule(ScheduleMessenger messenger)
+        {
+            _messenger = messenger; 
+        }
 
         [SlashCommand("test", "Receive a test message.")]
         public async Task TestCommand()
